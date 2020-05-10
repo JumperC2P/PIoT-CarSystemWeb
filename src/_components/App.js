@@ -20,7 +20,6 @@ class App extends Component {
               <NavBar />
               <Switch>
                 <Route exact path="/" render={(props) => {
-                      console.log(this.props);
                       if(this.props && this.props.user) {
                           return <Home {...props} />;
                       }else {

@@ -7,7 +7,8 @@ import { history } from '../_helpers';
 export const userActions = {
     login,
     logout,
-    register
+    register,
+    checkUserName
 };
 
 function login(user) {
@@ -17,15 +18,11 @@ function login(user) {
             .then(
                 response => { 
                     if (response){
-
-                        console.log(response);
-
                         let result = response.result;
-                        console.log(result);
                         if (result.length !== 0){
                             dispatch(success(user));
                             dispatch(alertActions.success("Login is successful.","", true, 1500));
-                            history.push('/');
+                            history.push('/home');
                         }else{
                             dispatch(alertActions.error("Login failed","Please check your username and password."));
                         }
@@ -55,29 +52,24 @@ function logout() {
     function success() { return { type: userConstants.LOGOUT };}  
 }
 
-function register(role, name, email, password) {
+function register(user) {
     return dispatch => {
 
-        userService.register(role, name, email, password)
+        userService.register(user.first_name, user.last_name, user.username, user.email, user.password, user.role)
             .then(
-                user => { 
-
-                    if (user){
-
-                        let role = 2;
-                        if(user.id.substring(0,1) === "a"){
-                            role = 1;
-                        }
-
-                        dispatch(success(user, role));
-                        dispatch(alertActions.success("Registration successful.","", true, 0));
-                        if(role === 1){
-                            history.push('/admin');
+                response => { 
+                    if (response){
+                        let user = response.result;
+                        if (user){
+                            dispatch(success(user));
+                            dispatch(alertActions.success("Thank you for registering.","", true, 1500));
+                            history.push('/home');
                         }else{
-                            history.push('/content');
+                            dispatch(alertActions.error("Register failed","Please check your username and password."));
                         }
+                        
                     }else{
-                        dispatch(alertActions.error("Login failed","Please check your email and password."));
+                        dispatch(alertActions.error("Register failed","Please check your username and password."));
                     }
                 },
                 error => {
@@ -88,6 +80,33 @@ function register(role, name, email, password) {
     };
 
     // function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
-    function success(user, role) { return { type: userConstants.REGISTER_SUCCESS, user, role } }
+    function success(user, role) { return { type: userConstants.REGISTER_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+}
+
+function checkUserName(username) {
+    return dispatch => {
+
+        userService.checkUserName(username)
+            .then(
+                response => { 
+                    if (response){
+                        let result = response.result;
+                        if (!result){
+                            dispatch(alertActions.error("The username is already exist.","Please change another username."));
+                        }
+                         dispatch(success(result));
+                    }else{
+                        dispatch(alertActions.error("The username is already exist.","Please change another username."));
+                    }
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function success(result, error) { return { type: userConstants.REGISTER_CHECK_USERNAME, result, error } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }

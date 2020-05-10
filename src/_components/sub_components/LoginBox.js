@@ -74,7 +74,6 @@ const actionCreators = {
 };
 
 const mapStateToProps = (state) => ({ 
-    user: state.authentication.user
 })
 
 export default connect(mapStateToProps, actionCreators)(LoginBox);

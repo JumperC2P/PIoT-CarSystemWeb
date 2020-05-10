@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 
-const initialState = false?{
+const initialState = true?{
   user:{
     email: "ys17ygg@gmail.com",
     first_name: "Frank",
@@ -22,18 +22,25 @@ export function authentication(state = initialState, action) {
       return {
         user: action.user
       };
-    case userConstants.LOGIN_SUCCESS:
-      return {
-        user: action.user
-      };
     case userConstants.REGISTER_SUCCESS:
       return {
-        user: action.user
+        user: action.user,
+        role: action.role
+      };
+    case userConstants.LOGIN_SUCCESS:
+      return {
+        user: action.user,
+        role: action.role
       };
     case userConstants.LOGIN_FAILURE:
       return {};
     case userConstants.REGISTER_FAILURE:
       return {};
+    case userConstants.REGISTER_CHECK_USERNAME:
+      return {
+        check_user_name: action.result
+        // user: state.user
+      };
     case userConstants.LOGOUT:
       return {};
     case userConstants.UPDATE:

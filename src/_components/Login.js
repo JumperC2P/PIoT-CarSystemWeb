@@ -6,6 +6,7 @@ import LoginBox from './sub_components/LoginBox';
 class Login extends Component{
 
     render(){
+        
         return (
             <div className="content">
                 <div className="home wrap">

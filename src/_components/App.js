@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import ProtectedRoute from './sub_components/ProtectedRoute';
 
 class App extends Component {
 
@@ -28,6 +29,7 @@ class App extends Component {
                   }}/>
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <ProtectedRoute exact path="/home" component={Home} />
               </Switch> 
           </div> 
       </Router>

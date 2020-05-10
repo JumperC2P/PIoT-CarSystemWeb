@@ -29,12 +29,10 @@ function getOrder(userId){
 }
 
 function sendOrder(order){
-    console.log("Send order");
     return orderService.sendOrder(order)
             .then(
                 orderId => { 
                     if (orderId){
-                        console.log("order id: " + orderId);
                         return orderId;
                     }else{
                         alertActions.show_error("Order failed","Please contact with administrator.", null);

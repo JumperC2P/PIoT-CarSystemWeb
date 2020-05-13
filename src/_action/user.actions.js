@@ -1,7 +1,6 @@
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
-import { history } from '../_helpers';
 
 
 export const userActions = {
@@ -11,7 +10,7 @@ export const userActions = {
     checkUserName
 };
 
-function login(user) {
+function login(user, history) {
     return dispatch => {
 
         userService.login(user.username, user.password)
@@ -20,9 +19,10 @@ function login(user) {
                     if (response){
                         let result = response.result;
                         if (result.length !== 0){
-                            dispatch(success(user));
+                            dispatch(success(result[0]));
                             dispatch(alertActions.success("Login is successful.","", true, 1500));
-                            history.push('/home');
+                            console.log(history);
+                            history.push('/');
                         }else{
                             dispatch(alertActions.error("Login failed","Please check your username and password."));
                         }
@@ -47,12 +47,11 @@ function logout() {
     return dispatch => {
         dispatch(success());
         dispatch(alertActions.success("Logout is successful.","", true, 1000));
-        history.push('/'); 
     }
     function success() { return { type: userConstants.LOGOUT };}  
 }
 
-function register(user) {
+function register(user, history) {
     return dispatch => {
 
         userService.register(user.first_name, user.last_name, user.username, user.email, user.password, user.role)
@@ -63,7 +62,7 @@ function register(user) {
                         if (user){
                             dispatch(success(user));
                             dispatch(alertActions.success("Thank you for registering.","", true, 1500));
-                            history.push('/home');
+                            history.push('/');
                         }else{
                             dispatch(alertActions.error("Register failed","Please check your username and password."));
                         }

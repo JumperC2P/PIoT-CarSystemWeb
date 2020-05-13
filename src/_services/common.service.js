@@ -1,61 +1,61 @@
 import { API_URL } from '../_constants';
+import qs from 'qs';
 
 export const commonService = {
-    getDeliveryOptions,
-    getPaymentOptions,
-    getParameters
+    getMakes,
+    getSeatNumbers,
+    getBodyTypes,
+    getColors
 };
 
-async function getDeliveryOptions() {
+async function getMakes(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({ username, password })
     };
 
-    const response = await fetch(API_URL + "/order/getDeliveryOptions", requestOptions);
+    const response = await fetch(API_URL + "/getMakes", requestOptions);
     const response_1 = await handleResponse(response);
-    let resultCode = response_1.resultCode;
-    if (resultCode === 0) {
-        return response_1.returnObj;
-    }
-    else {
-        return null;
-    }
+    return response_1;
 }
 
-async function getPaymentOptions() {
+async function getSeatNumbers(username, password) {
 
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+        body: qs.stringify({ username, password })
     };
 
-    const response = await fetch(API_URL + "/order/getPurchaseOptions", requestOptions);
+    const response = await fetch(API_URL + "/getSeatNumbers", requestOptions);
     const response_1 = await handleResponse(response);
-    let resultCode = response_1.resultCode;
-    if (resultCode === 0) {
-        return response_1.returnObj;
-    }
-    else {
-        return null;
-    }
+    return response_1;
 }
 
-async function getParameters(){
+async function getBodyTypes(username, password) {
+
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({ username, password })
     };
 
-    const response = await fetch(API_URL + "/diary/getParameters", requestOptions);
+    const response = await fetch(API_URL + "/getBodyTypes", requestOptions);
     const response_1 = await handleResponse(response);
-    let resultCode = response_1.resultCode;
-    if (resultCode === 0) {
-        return response_1.returnObj;
-    }
-    else {
-        return null;
-    }
+    return response_1;
+}
+
+async function getColors(username, password){
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: qs.stringify({ username, password })
+    };
+
+    const response = await fetch(API_URL + "/getColors", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
 }
 
 function handleResponse(response) {

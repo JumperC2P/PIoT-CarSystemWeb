@@ -5,6 +5,7 @@ import {Form, Button, Col} from 'react-bootstrap';
 import { userActions } from '../../_action';
 import { sha256 } from 'js-sha256';
 import $ from "jquery";
+import { withRouter } from 'react-router-dom';
 
 const RegisterBox = (props) => {
     const [validated, setValidated] = useState(false);
@@ -28,7 +29,7 @@ const RegisterBox = (props) => {
                 email : $('#validationEmail').val(),
                 role : 'Customer'
             }
-            props.register(userInfo);
+            props.register(userInfo, props.history);
         }
 
         setValidated(true);
@@ -133,4 +134,4 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, actionCreators)(RegisterBox);
+export default withRouter(connect(mapStateToProps, actionCreators)(RegisterBox));

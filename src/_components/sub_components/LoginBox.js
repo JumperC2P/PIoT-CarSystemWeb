@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import '../styles/Login.css';
 import {Form, Button, InputGroup, Col} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { userActions } from '../../_action';
 import { sha256 } from 'js-sha256';
 import $ from "jquery";
@@ -21,7 +21,7 @@ const LoginBox = (props) => {
                 username: $('#validationCustomUsername').val(), 
                 password: sha256($('#validationPassword').val())
             };
-            props.login(user)
+            props.login(user, props.history)
         }
         
         setValidated(true);
@@ -76,4 +76,4 @@ const actionCreators = {
 const mapStateToProps = (state) => ({ 
 })
 
-export default connect(mapStateToProps, actionCreators)(LoginBox);
+export default withRouter(connect(mapStateToProps, actionCreators)(LoginBox));

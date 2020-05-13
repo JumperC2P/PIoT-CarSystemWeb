@@ -6,6 +6,7 @@ import {Form, Button } from 'react-bootstrap'
 
 class Logout extends Component{
 
+
     logout = () => {
         this.props.logout();
     }

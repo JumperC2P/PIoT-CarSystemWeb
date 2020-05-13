@@ -20,16 +20,17 @@ class App extends Component {
           <div> 
               <NavBar />
               <Switch>
-                <Route exact path="/" render={(props) => {
+                {/* <Route exact path="/" render={(props) => {
                       if(this.props && this.props.user) {
                           return <Home {...props} />;
                       }else {
                           return <Login {...props} />;
-                      }
-                  }}/>
+                      } */}
+                  {/* }}/> */}
+                <Route exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <ProtectedRoute exact path="/home" component={Home} />
+                {/* <ProtectedRoute exact path="/home" component={Home} /> */}
               </Switch> 
           </div> 
       </Router>

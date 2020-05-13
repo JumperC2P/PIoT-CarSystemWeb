@@ -6,7 +6,8 @@ const MySwal = withReactContent(Swal);
 export const alertService = {
     success,
     error,
-    info
+    info,
+    warning
 };
 
 function success(title, message, showConfirmButton, timer, func) {
@@ -19,6 +20,24 @@ function success(title, message, showConfirmButton, timer, func) {
         showConfirmButton: showConfirmButton,
         timer: timer===0?999999:timer,
     });
+}
+
+function warning(title, message, confirm_btn_text, showConfirmButton, timer, confirm_func, cancel_func) {
+
+    MySwal.fire({
+        position: 'top-center',
+        title: title,
+        text: message,
+        icon: 'warning',
+        onClose: cancel_func,
+        showConfirmButton: showConfirmButton,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirm_btn_text,
+        timer: timer===0?999999:timer
+
+      }).then(confirm_func)
 }
 
 function error(title, message, func) {

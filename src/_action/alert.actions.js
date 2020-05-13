@@ -7,6 +7,7 @@ export const alertActions = {
     info,
     clear,
     show_success,
+    show_warning,
     show_error,
     show_info
 };
@@ -29,6 +30,9 @@ function clear() {
 
 function show_success(title, message, showConfirmButton, timer, func){
     alertService.success(title, message, showConfirmButton, timer, func);
+}
+function show_warning(title, message, confirm_btn_text, showConfirmButton, timer, confirm_func, cancel_func){
+    alertService.warning(title, message, confirm_btn_text, showConfirmButton, timer, confirm_func, cancel_func);
 }
 function show_error(title, message, func){
     alertService.error(title, message, func);

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import ShowRecordsHistory from './ShowRecordsHistory';
 import ProtectedRoute from './sub_components/ProtectedRoute';
 
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/records" component={ShowRecordsHistory} />
                 {/* <ProtectedRoute exact path="/home" component={Home} /> */}
               </Switch> 
           </div> 

@@ -233,7 +233,9 @@ class SearchAndResult extends Component{
             makes: makesC,
             colors: colorsC,
             body_types: typesC,
-            seat_numbers: seatsC
+            seat_numbers: seatsC,
+            cars: [],
+            loading: true
         });
     }
 

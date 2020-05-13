@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import Logout from './sub_components/Logout';
 import { connect } from 'react-redux';
 import { Navbar, Nav} from 'react-bootstrap'
+import ShowRecordsHistory from './ShowRecordsHistory';
 
 
 const NavBar = (props) =>  {
@@ -13,7 +14,7 @@ const NavBar = (props) =>  {
                 <Navbar.Brand><Link to="/" style={{"color":"white"}}>Panda Car Rental</Link></Navbar.Brand>
                 <Nav className="mr-auto">
                     {
-                        props.user ? "" :  <Link className="nav-item nav-link" to="/register">Register</Link>
+                        props.user ? <Link className="nav-item nav-link" to="/records">My Rental Records</Link> :  <Link className="nav-item nav-link" to="/register">Register</Link>
                     }
                     {
                         props.user ? "" :  <Link className="nav-item nav-link" to="/login">Login</Link>  

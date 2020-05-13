@@ -4,7 +4,9 @@ import { API_URL } from '../_constants';
 export const carService = {
     getCarsWithparams,
     checkRecord,
-    book
+    book,
+    getRecords,
+    cancelBooking
 };
 
 
@@ -40,6 +42,30 @@ async function book(username, password, book_info) {
     };
     
     const response = await fetch(API_URL + "/book", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function getRecords(username, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password})
+    };
+    
+    const response = await fetch(API_URL + "/getRecords", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function cancelBooking(username, password, record) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, record})
+    };
+    
+    const response = await fetch(API_URL + "/cancel_booking", requestOptions);
     const response_1 = await handleResponse(response);
     return response_1;
 }

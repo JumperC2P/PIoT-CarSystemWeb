@@ -5,6 +5,8 @@ export const carActions = {
     getCarsWithparams,
     checkRecord,
     book,
+    getRecords,
+    cancelBooking,
     getGoogleEventUrl,
     transDateFormat
 };
@@ -38,6 +40,31 @@ async function checkRecord(username, password){
 async function book(username, password, book_info){
 
     return carService.book(username, password, book_info)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function getRecords(username, password){
+
+    return carService.getRecords(username, password)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+async function cancelBooking(username, password, record){
+
+    return carService.cancelBooking(username, password, record)
             .then(
                 response => { 
                     return response.result;

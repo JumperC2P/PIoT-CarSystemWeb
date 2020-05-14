@@ -19,6 +19,7 @@ function login(user, history) {
                     if (response){
                         let result = response.result;
                         if (result.length !== 0){
+                            console.log(result[0])
                             dispatch(success(result[0]));
                             dispatch(alertActions.success("Login is successful.","", true, 1500));
                             console.log(history);

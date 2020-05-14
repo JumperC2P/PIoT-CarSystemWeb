@@ -28,10 +28,10 @@ class App extends Component {
                           return <Login {...props} />;
                       } */}
                   {/* }}/> */}
-                <Route exact path="/" component={Home} />
+                <ProtectedRoute exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route exact path="/records" component={ShowRecordsHistory} />
+                <ProtectedRoute exact path="/records" component={ShowRecordsHistory} />
                 {/* <ProtectedRoute exact path="/home" component={Home} /> */}
               </Switch> 
           </div> 

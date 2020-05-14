@@ -42,7 +42,7 @@ class SearchAndResult extends Component{
 
     constructor(props){
         super(props);
-
+        console.log(props);
         this.state = {
             columns : [
                         { name: 'Car ID', selector: 'car_id', sortable: true, center: true },
@@ -341,6 +341,7 @@ class SearchAndResult extends Component{
 }
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         user: state.authentication.user
     }

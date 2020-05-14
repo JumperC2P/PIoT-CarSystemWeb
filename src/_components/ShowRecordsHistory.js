@@ -51,9 +51,11 @@ class ShowRecordsHistory extends Component{
                 { name: 'Color', selector: 'color', sortable: true, center: true },
                 { name: 'Seats Number', selector: 'seat_number', sortable: false, center: true },
                 { name: 'From', selector: 'est_rent_date', sortable: true, center: true, 
+                    // cell: (row) => { return row.est_rent_date}
                     cell: (row) => { return format(subHours(new Date(row.est_rent_date), 10), "dd/MM/yyyy HH:mm:ss", 'en-AU')}
                 },
                 { name: 'To', selector: 'est_return_date', sortable: true, center: true, 
+                    // cell: (row) => { return row.est_return_date }
                     cell: (row) => { return format(subHours(new Date(row.est_return_date), 10), "dd/MM/yyyy HH:mm:ss", 'en-AU')} 
                 },
                 { name: 'Cost', selector: 'cost', sortable: true, center: true,

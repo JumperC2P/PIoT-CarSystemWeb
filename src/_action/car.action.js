@@ -90,7 +90,7 @@ function getGoogleEventUrl(username, car, est_rent_date, est_return_date){
     url = url + "&location=" + lat + "%2C" + lng;
 
     // description
-    url = url + "&details=Hi%2C%20" + username + "%2C%20you%20rent%20a%20shared%20car%20from%20Panda%20Car%20Rental.%20The%20details%20are%20as%20below%3A%0ACar%20Manufacturer%3A%20" 
+    url = url + "&details=Hi%2C%20" + username + "%2C%20you%20rent%20a%20shared%20car%20from%20Panda%20Car%20Rental.%20The%20details%20are%20as%20below%3A%0ACar%20ID%3A%20"+car.car_id+"%0ACar%20Manufacturer%3A%20" 
         + car.make + "%0AColor%3A%20" + car.color + "%0ASeat%20Number%3A%20" + car.seat_number + "%0ACost%20per%20hour%3A%20" + car.cost
 
     return url;

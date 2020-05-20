@@ -76,7 +76,8 @@ class ShowRecordsHistory extends Component{
                     cell: (row) => {
                         return row.is_return !== 1?
                                     (row.is_cancel !== 1 ?
-                                        <Button variant="danger" style={{"cursor":"pointer"}} onClick={()=>{this.cancelBooking(row)}}>Cancel</Button>:
+                                        (row.car_status === 'Booked'?<Button variant="danger" style={{"cursor":"pointer"}} onClick={()=>{this.cancelBooking(row)}}>Cancel</Button>
+                                        :<Button variant="info" disabled style={{"cursor":"not-allowed"}} >Rented</Button>):
                                         <Button variant="info" disabled style={{"cursor":"not-allowed"}} >Canceled</Button>
                                     ):
                             <Button variant="success" disabled style={{"cursor":"not-allowed"}} >Completed</Button>

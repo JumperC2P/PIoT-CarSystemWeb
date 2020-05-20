@@ -6,6 +6,7 @@ import '../../styles/SearchAndResult.css';
 import DataTable from 'react-data-table-component';
 import GoogleMapPopWindow from './GoogleMapPopWindow';
 import BookWindow from './BookWindow';
+import {CAR_STATUS} from '../../../_constants'
 
 
 const pageOptions = [10];
@@ -68,6 +69,7 @@ class SearchAndResult extends Component{
                             center: true
                           },
                     ],
+            status: [],
             makes: [],
             colors: [],
             body_types: [],
@@ -110,6 +112,7 @@ class SearchAndResult extends Component{
         })
 
         this.setState({
+            status: CAR_STATUS,
             makes: makesP,
             colors: colorsP,
             body_types: typesP,
@@ -121,7 +124,14 @@ class SearchAndResult extends Component{
 
         var target_arr;
 
-        if (action === 'make'){
+        if (action === 'status'){
+            target_arr = this.state.status;
+            target_arr.map((option)=>{
+                if (option.status === target.option.status){
+                    option.isChecked = !option.isChecked
+                }
+            })
+        }else if (action === 'make'){
             target_arr = this.state.makes;
             target_arr.map((option)=>{
                 if (option.name === target.option.name){
@@ -153,6 +163,7 @@ class SearchAndResult extends Component{
 
 
         await this.setState({
+            status: action === 'status'?target_arr:this.state.status,
             makes: action === 'make'?target_arr:this.state.makes,
             colors: action === 'color'?target_arr:this.state.colors,
             body_types: action === 'type'?target_arr:this.state.body_types,
@@ -162,11 +173,18 @@ class SearchAndResult extends Component{
 
     onSearch = async () => {
         let search_paramters= {
+            status: [],
             makes: [],
             colors: [],
             types: [],
             seats: []
         }
+
+        this.state.status.map(option=>{
+            if (option.isChecked){
+                search_paramters.status.push(option.status)
+            }
+        })
 
         this.state.makes.map(option=>{
             if (option.isChecked){
@@ -228,8 +246,15 @@ class SearchAndResult extends Component{
             option.isChecked = false
             seatsC.push(option)
         })
+        
+        let statusC = []
+        this.state.status.map(option=>{
+            option.isChecked = false
+            statusC.push(option)
+        })
 
         this.setState({
+            status: statusC,
             makes: makesC,
             colors: colorsC,
             body_types: typesC,
@@ -244,6 +269,22 @@ class SearchAndResult extends Component{
             <div>
                 <div id = "search-bar">
                     <Form>
+                        <Form.Row>
+                            <Form.Group as={Col} controlId="checkStatus">
+                                <Form.Label md="4" className="search-label">Manufacturer: </Form.Label>
+                                {this.state.status.map((option)=>
+                                    <Form.Check 
+                                        key={option.status}
+                                        inline 
+                                        type="checkbox" 
+                                        label={option.status} 
+                                        value={option.status}
+                                        onChange={()=>{this.selectOptions({option},'status')}} id={`make-${option.status}-1`}
+                                        checked={option.isChecked}
+                                    />
+                                )}
+                            </Form.Group>
+                        </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkMake">
                                 <Form.Label md="4" className="search-label">Manufacturer: </Form.Label>

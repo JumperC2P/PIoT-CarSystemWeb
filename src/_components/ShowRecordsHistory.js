@@ -74,8 +74,7 @@ class ShowRecordsHistory extends Component{
                 },
                 {
                     cell: (row) => {
-                           console.log(row);
-			    return row.is_return !== 1?
+			                return row.is_return !== 1?
                                     (row.is_cancel !== 1 ?
                                         (row.car_status === 'Booked'?<Button variant="danger" style={{"cursor":"pointer"}} onClick={()=>{this.cancelBooking(row)}}>Cancel</Button>
                                         :<Button variant="info" disabled style={{"cursor":"not-allowed"}} >Rented</Button>):

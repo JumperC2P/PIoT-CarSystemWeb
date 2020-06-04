@@ -1,31 +1,30 @@
-import React from 'react';
-// import './styles/Navbar.css';
-import { withRouter, Link } from 'react-router-dom';
-import Logout from './sub_components/Logout';
+import React, {Component} from 'react';
+import { withRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Navbar, Nav} from 'react-bootstrap'
-import ShowRecordsHistory from './ShowRecordsHistory';
+import BasicNavBar from './sub_components/BasicNavBar';
+import AdminNavBar from './admin/AdminNavBar';
+import EngNavBar from './engineer/EngNavBar';
 
 
-const NavBar = (props) =>  {
-    return(
-        <div>
-            <Navbar bg="primary" variant="dark" fixed="top">
-                <Navbar.Brand><Link to="/" style={{"color":"white"}}>Panda Car Rental</Link></Navbar.Brand>
-                <Nav className="mr-auto">
-                    {
-                        props.user ? <Link className="nav-item nav-link" to="/records">My Rental Records</Link> :  <Link className="nav-item nav-link" to="/register">Register</Link>
-                    }
-                    {
-                        props.user ? "" :  <Link className="nav-item nav-link" to="/login">Login</Link>  
-                    }
-                </Nav>
-                {
-                    props.user ? <Logout /> : <div></div>
+class NavBar extends Component  {
+
+    render(){
+        return (
+            <Route render={(props) => {
+                if(this.props && this.props.user &&this.props.user.role && this.props.user.role === 'Admin') {
+                    console.log("admin")
+                    return <AdminNavBar {...props} />;
+                }else if(this.props && this.props.user && this.props.user.role && this.props.user.role === 'Engineer'){
+                    console.log("engineer")
+                    return <EngNavBar {...props} />;
+                }else {
+                    console.log("basic")
+                    return <BasicNavBar {...props} />;
                 }
-            </Navbar>
-        </div>
-    );
+            }}/>
+        
+        );
+    }
 }
 
 const mapStateToProps = (state) => {

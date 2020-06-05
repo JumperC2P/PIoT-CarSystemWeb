@@ -7,7 +7,9 @@ export const adminService = {
     recoverDiaryParameters,
     getUsersWithparams,
     deleteUser,
-    reportCar
+    reportCar,
+    getReports,
+    closeReport
 };
 
 async function updateDiaryParameters(userId, target, description) {
@@ -70,14 +72,38 @@ async function deleteUser(username, password, user_id) {
     return response_1;
 }
 
-async function reportCar(username, password, car_id) {
+async function reportCar(username, password, car_id, admin_id, issue) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, car_id})
+        body: JSON.stringify({ username, password, car_id, admin_id, issue})
     };
     
     const response = await fetch(API_URL + "/reportCar", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function getReports(username, password) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password})
+    };
+    
+    const response = await fetch(API_URL + "/getReports", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function closeReport(username, password, report_id, car_id, engineer_id) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, report_id, car_id, engineer_id})
+    };
+    
+    const response = await fetch(API_URL + "/closeReport", requestOptions);
     const response_1 = await handleResponse(response);
     return response_1;
 }

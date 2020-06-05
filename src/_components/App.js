@@ -13,6 +13,7 @@ import CarManagment from './admin/cars/CarManagment';
 import AdminDashBoard from './admin/AdminDashBoard';
 import EngHome from './engineer/EngHome';
 import UserDetails from './customer/UserDetails';
+import RentalHistory from './admin/rental/RentalHistory';
 
 class App extends Component {
 
@@ -26,13 +27,6 @@ class App extends Component {
           <div> 
               <NavBar />
               <Switch>
-                {/* <Route exact path="/" render={(props) => {
-                      if(this.props && this.props.user) {
-                          return <Home {...props} />;
-                      }else {
-                          return <Login {...props} />;
-                      } */}
-                  {/* }}/> */}
                 <ProtectedRoute exact path="/" component={Home} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
@@ -42,6 +36,7 @@ class App extends Component {
                 <ProtectedRoute exact path="/admin/dashboard" component={AdminDashBoard} />
                 <ProtectedRoute exact path="/admin/users" component={UserManagment} />
                 <ProtectedRoute exact path="/admin/cars" component={CarManagment} />
+                <ProtectedRoute exact path="/admin/rental_history" component={RentalHistory} />
                 <ProtectedRoute exact path="/engineer" component={EngHome} />
               </Switch> 
           </div> 

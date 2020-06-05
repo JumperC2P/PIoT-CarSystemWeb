@@ -15,6 +15,7 @@ const AdminNavBar = (props) =>  {
                    <Link className="nav-item nav-link" to="/admin/dashboard">DashBoard</Link>
                    <Link className="nav-item nav-link" to="/admin/users">User Management</Link>
                    <Link className="nav-item nav-link" to="/admin/cars">Car Management</Link>
+                   <Link className="nav-item nav-link" to="/admin/rental_history">Rental History</Link>
                 </Nav>
                 {
                     props.user ? <Logout /> : <div></div>

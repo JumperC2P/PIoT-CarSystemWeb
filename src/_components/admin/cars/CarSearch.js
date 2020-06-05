@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import {Form, Button, Col} from 'react-bootstrap';
 import { commonActions, carActions, alertActions, adminActions } from '../../../_action';
@@ -6,7 +6,8 @@ import '../../styles/CarSearch.css';
 import DataTable from 'react-data-table-component';
 import GoogleMapPopWindow from '../../customer/serach/GoogleMapPopWindow';
 import CarDetails from './CarDetails';
-import {CAR_STATUS} from '../../../_constants'
+import {CAR_STATUS} from '../../../_constants';
+import Popup from "reactjs-popup";
 
 
 const pageOptions = [10,25];
@@ -37,6 +38,76 @@ const customStyles = {
       },
     },
   };
+
+const ReportWindow = (props) => {
+    const [issue, setIssue] = useState("");
+
+
+    const onReported = (close) => {
+        alertActions.show_warning("Are you sure to report the car?", "Car ID: "+props.car.car_id, "Yes, report it.", true, 0, async (isConfirm)=>{
+            if (isConfirm.value){
+                let result = await adminActions.reportCar(props.user.username, props.user.password, props.car.car_id, props.user.user_id, issue)
+                if (result === true){
+                    alertActions.show_success("You have reported the car.", "", true, 0, ()=>{
+                        props.parent.onSearch();
+                        close();
+                    });
+                }else{
+                    alertActions.show_error("Failed to report the car", "", null);
+                }
+            }
+        }, null)
+    } 
+
+    const onInputChange = (e) => {
+        setIssue(e.target.value);
+    }
+
+    return(
+        <div>
+            <Popup trigger={<Button variant="danger" style={{"cursor":"cursor"}}>Report</Button>}
+                modal
+                closeOnDocumentClick
+                style={{"border-radius": "18px"}}
+            >
+                {(close)=>(
+                        <div id="pop_model">
+                            <a id="pop_close" onClick={close}>
+                                &times;
+                            </a>
+                            <div id="pop_header" style={{}}> 
+                                <span>   
+                                    Report the car - Car ID: {props.car.car_id}
+                                </span>
+                            </div>
+                            <div id="pop_content" className ="report_pop">
+                                <Form>
+                                    <Form.Row>
+                                         <Form.Group as={Col} md="12" controlId="issue">
+                                            <Form.Label>Issue:</Form.Label>
+                                            <Form.Control 
+                                                type="text" 
+                                                onChange={(e)=> onInputChange(e)}
+                                            />
+                                        </Form.Group>
+                                    </Form.Row>
+                                </Form>
+                            </div>
+                            <div id="pop_footer">
+                                <Button className="menu-button" variant="success" type="button" onClick={()=>{onReported(close)}}>
+                                    Submit
+                                </Button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <Button className="menu-button" variant="light" type="button" onClick={close}>
+                                    Cancel
+                                </Button>
+                            </div>
+                        </div>
+                )}
+            </Popup>
+        </div>
+    );
+}
   
 
 class CarSearch extends Component{
@@ -53,7 +124,7 @@ class CarSearch extends Component{
                         { name: 'Seats Number', selector: 'seat_number', sortable: false, center: true },
                         { name: 'Status', selector: 'car_status', sortable: true, center: true },
                         { name: 'Location', selector: 'car_location', sortable: false, center: true, 
-                            cell:  (row) => <GoogleMapPopWindow car={row}/>
+                            cell:  (row) => <GoogleMapPopWindow {...props} parent={this} car={row}/>
                         },
                         {
                             cell: (row) => {
@@ -66,8 +137,8 @@ class CarSearch extends Component{
                           },
                         {
                             cell: (row) => {
-                                return row.car_status !== 'Reported'?
-                                    <Button variant="danger" style={{"cursor":"cursor"}} onClick={()=>{this.onReported(row)}}>Report</Button>:
+                                return row.car_status !== 'Reported'?<ReportWindow car={row} {...props} parent={this} />
+                                    :
                                     <Button variant="secondary" disabled style={{"cursor":"not-allowed"}} >{row.car_status}</Button>
                             },
                             ignoreRowClick: true,
@@ -90,21 +161,6 @@ class CarSearch extends Component{
     componentDidMount(){
         this.getParameters();
     }
-
-    onReported = (car) => {
-        alertActions.show_warning("Are you sure to report the car?", "Car ID: "+car.car_id, "Yes, report it.", true, 0, async (isConfirm)=>{
-            if (isConfirm.value){
-                let result = await adminActions.reportCar(this.props.user.username, this.props.user.password, car.car_id)
-                if (result === true){
-                    alertActions.show_success("You have reported the car.", "", true, 0, ()=>{
-                        this.onSearch();
-                    });
-                }else{
-                    alertActions.show_error("Failed to report the car", "", null);
-                }
-            }
-        }, null)
-    } 
 
     getParameters = async() => {
         let makesP = await commonActions.getMakes(this.props.user.username, this.props.user.password);

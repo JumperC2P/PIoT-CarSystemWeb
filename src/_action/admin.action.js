@@ -8,7 +8,9 @@ export const adminActions = {
     recoverDiaryParameters,
     getUsersWithparams,
     deleteUser,
-    reportCar
+    reportCar,
+    getReports,
+    closeReport
 };
 
 async function updateDiaryParameters(userId, target, description, close) {
@@ -113,6 +115,19 @@ async function getUsersWithparams(username, password, params){
             );
 }
 
+async function getReports(username, password, ){
+
+    return adminService.getReports(username, password)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
 async function deleteUser(username, password, user_id){
 
     return adminService.deleteUser(username, password, user_id)
@@ -126,9 +141,22 @@ async function deleteUser(username, password, user_id){
             );
 }
 
-async function reportCar(username, password, car_id){
+async function reportCar(username, password, car_id, user_id, issue){
 
-    return adminService.reportCar(username, password, car_id)
+    return adminService.reportCar(username, password, car_id, user_id, issue)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function closeReport(username, password, report_id, car_id, engineer_id){
+
+    return adminService.closeReport(username, password, report_id, car_id, engineer_id)
             .then(
                 response => { 
                     return response.result;

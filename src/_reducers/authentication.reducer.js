@@ -9,6 +9,13 @@ const initialState = true?{
     role: "Admin",
     user_id: 1,
     username: "Frank"
+    // email: "ys17ygg@gmail.com",
+    // first_name: "Zack",
+    // last_name: "Sam",
+    // password: "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    // role: "Engineer",
+    // user_id: 6,
+    // username: "Zack"
   }
 }:{};
 

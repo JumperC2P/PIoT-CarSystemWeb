@@ -6,7 +6,8 @@ export const adminService = {
     deleteDiaryParameters,
     recoverDiaryParameters,
     getUsersWithparams,
-    deleteUser
+    deleteUser,
+    reportCar
 };
 
 async function updateDiaryParameters(userId, target, description) {
@@ -65,6 +66,18 @@ async function deleteUser(username, password, user_id) {
     };
     
     const response = await fetch(API_URL + "/deleteUser", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function reportCar(username, password, car_id) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, car_id})
+    };
+    
+    const response = await fetch(API_URL + "/reportCar", requestOptions);
     const response_1 = await handleResponse(response);
     return response_1;
 }

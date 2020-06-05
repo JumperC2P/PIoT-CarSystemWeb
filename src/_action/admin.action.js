@@ -7,7 +7,8 @@ export const adminActions = {
     deleteDiaryParameters,
     recoverDiaryParameters,
     getUsersWithparams,
-    deleteUser
+    deleteUser,
+    reportCar
 };
 
 async function updateDiaryParameters(userId, target, description, close) {
@@ -115,6 +116,19 @@ async function getUsersWithparams(username, password, params){
 async function deleteUser(username, password, user_id){
 
     return adminService.deleteUser(username, password, user_id)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function reportCar(username, password, car_id){
+
+    return adminService.reportCar(username, password, car_id)
             .then(
                 response => { 
                     return response.result;

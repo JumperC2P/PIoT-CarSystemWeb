@@ -232,8 +232,6 @@ class UserSearch extends Component{
                                 />
                             </Form.Group>
                         </Form.Row>
-                        {/* <Form.Row>
-                        </Form.Row> */}
 
                         <Button variant="primary" type="button" onClick={this.onSearch}>
                             Search

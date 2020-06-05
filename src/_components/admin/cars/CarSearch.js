@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Form, Button, Col} from 'react-bootstrap';
-import { commonActions, carActions, alertActions } from '../../../_action';
+import { commonActions, carActions, alertActions, adminActions } from '../../../_action';
 import '../../styles/CarSearch.css';
 import DataTable from 'react-data-table-component';
 import GoogleMapPopWindow from '../../customer/serach/GoogleMapPopWindow';
@@ -92,8 +92,18 @@ class CarSearch extends Component{
     }
 
     onReported = (car) => {
-        console.log("Report");
-        console.log(car);
+        alertActions.show_warning("Are you sure to report the car?", "Car ID: "+car.car_id, "Yes, report it.", true, 0, async (isConfirm)=>{
+            if (isConfirm.value){
+                let result = await adminActions.reportCar(this.props.user.username, this.props.user.password, car.car_id)
+                if (result === true){
+                    alertActions.show_success("You have reported the car.", "", true, 0, ()=>{
+                        this.onSearch();
+                    });
+                }else{
+                    alertActions.show_error("Failed to report the car", "", null);
+                }
+            }
+        }, null)
     } 
 
     getParameters = async() => {
@@ -223,7 +233,6 @@ class CarSearch extends Component{
         }else{
             alertActions.show_info("Cannot find the cars with your condition.", "", null)
         }
-        console.log(cars.length);
     }
 
     onClear = () => {

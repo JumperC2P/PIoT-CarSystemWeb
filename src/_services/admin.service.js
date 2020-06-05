@@ -4,7 +4,9 @@ import qs from 'qs';
 export const adminService = {
     updateDiaryParameters,
     deleteDiaryParameters,
-    recoverDiaryParameters
+    recoverDiaryParameters,
+    getUsersWithparams,
+    deleteUser
 };
 
 async function updateDiaryParameters(userId, target, description) {
@@ -39,6 +41,30 @@ async function recoverDiaryParameters(userId, target, diaryOptions) {
     };
 
     const response = await fetch(API_URL + "/diary/recoverDiaryParameters", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function getUsersWithparams(username, password, params) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, params })
+    };
+    
+    const response = await fetch(API_URL + "/getUsersWithparams", requestOptions);
+    const response_1 = await handleResponse(response);
+    return response_1;
+}
+
+async function deleteUser(username, password, user_id) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, user_id})
+    };
+    
+    const response = await fetch(API_URL + "/deleteUser", requestOptions);
     const response_1 = await handleResponse(response);
     return response_1;
 }

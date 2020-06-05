@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './styles/Login.css';
-import LoginBox from './sub_components/LoginBox';
+import LoginBox from './customer/LoginBox';
 
 
 class Login extends Component{

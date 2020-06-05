@@ -16,7 +16,7 @@ const BasicNavBar = (props) =>  {
                         props.user ? <Link className="nav-item nav-link" to="/records">My Rental Records</Link> :  <Link className="nav-item nav-link" to="/register">Register</Link>
                     }
                     {
-                        props.user ? "" :  <Link className="nav-item nav-link" to="/login">Login</Link>  
+                        props.user ? <Link className="nav-item nav-link" to="/member_center">Member Center</Link> :  <Link className="nav-item nav-link" to="/login">Login</Link>  
                     }
                 </Nav>
                 {

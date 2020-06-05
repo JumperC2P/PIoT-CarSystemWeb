@@ -5,7 +5,9 @@ import qs from 'qs';
 export const adminActions = {
     updateDiaryParameters,
     deleteDiaryParameters,
-    recoverDiaryParameters
+    recoverDiaryParameters,
+    getUsersWithparams,
+    deleteUser
 };
 
 async function updateDiaryParameters(userId, target, description, close) {
@@ -93,6 +95,32 @@ async function recoverDiaryParameters(userId, target, recoverOptions) {
                 error => {
                     alertActions.show_error(error.toString(), "", null);
                     return null;
+                }
+            );
+}
+
+async function getUsersWithparams(username, password, params){
+
+    return adminService.getUsersWithparams(username, password, params)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function deleteUser(username, password, user_id){
+
+    return adminService.deleteUser(username, password, user_id)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
                 }
             );
 }

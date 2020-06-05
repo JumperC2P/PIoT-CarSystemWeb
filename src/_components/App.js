@@ -7,7 +7,12 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import ShowRecordsHistory from './ShowRecordsHistory';
-import ProtectedRoute from './sub_components/ProtectedRoute';
+import ProtectedRoute from './customer/ProtectedRoute';
+import UserManagment from './admin/users/UserManagement';
+import CarManagment from './admin/cars/CarManagment';
+import AdminDashBoard from './admin/AdminDashBoard';
+import EngHome from './engineer/EngHome';
+import UserDetails from './customer/UserDetails';
 
 class App extends Component {
 
@@ -32,7 +37,12 @@ class App extends Component {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <ProtectedRoute exact path="/records" component={ShowRecordsHistory} />
-                {/* <ProtectedRoute exact path="/home" component={Home} /> */}
+                <ProtectedRoute exact path="/member_center" component={UserDetails} />
+                <ProtectedRoute exact path="/admin" component={AdminDashBoard} />
+                <ProtectedRoute exact path="/admin/dashboard" component={AdminDashBoard} />
+                <ProtectedRoute exact path="/admin/users" component={UserManagment} />
+                <ProtectedRoute exact path="/admin/cars" component={CarManagment} />
+                <ProtectedRoute exact path="/engineer" component={EngHome} />
               </Switch> 
           </div> 
       </Router>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './styles/Home.css';
+import '../styles/UserDetails.css';
 import { Redirect } from 'react-router-dom';
-import SearchAndResult from './customer/serach/SearchAndResult'
+import UserInfo from './UserInfo';
+// import SearchAndResult from './customer/serach/SearchAndResult'
 
-class Home extends Component{
+class UserDetails extends Component{
 
     constructor(props){
         super(props);
@@ -19,9 +20,9 @@ class Home extends Component{
         return(
             <div className="content">
                 <div className="home wrap">
-                    <h1 className="ui home">Hi, {this.props.user.first_name}, Pick a car you want to book.</h1>
+                    <h1 className="ui home">Hi, {this.props.user.first_name}. Welcome to member center.</h1>
                 </div>
-                <SearchAndResult {...this.props}/>
+                <UserInfo targer_user = {this.props.user}/>
             </div>
         );
     }
@@ -31,4 +32,4 @@ const mapStateToProps = (state) => ({
     user: state.authentication.user
 })
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(UserDetails);

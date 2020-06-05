@@ -8,7 +8,10 @@ export const carActions = {
     getRecords,
     cancelBooking,
     getGoogleEventUrl,
-    transDateFormat
+    transDateFormat,
+    addCar,
+    removeCar, 
+    updateCar
 };
 
 async function getCarsWithparams(username, password, params){
@@ -62,9 +65,48 @@ async function getRecords(username, password){
                 }
             );
 }
+
 async function cancelBooking(username, password, record){
 
     return carService.cancelBooking(username, password, record)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function addCar(username, password, car){
+    return carService.addCar(username, password, car)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function updateCar(username, password, car){
+
+    return carService.updateCar(username, password, car)
+            .then(
+                response => { 
+                    return response.result;
+                },
+                error => {
+                    alertActions.show_error(error.toString(), "", null);
+                }
+            );
+}
+
+async function removeCar(username, password, car_id){
+
+    return carService.removeCar(username, password, car_id)
             .then(
                 response => { 
                     return response.result;
@@ -102,19 +144,3 @@ function transDateFormat(date){
     var after = temp.slice(0,4)+temp.slice(5,7)+temp.slice(8,13)+temp.slice(14,16)+temp.slice(17,19)+'Z'
     return after;
 }
-
-// function sendOrder(order){
-//     return orderService.sendOrder(order)
-//             .then(
-//                 orderId => { 
-//                     if (orderId){
-//                         return orderId;
-//                     }else{
-//                         alertActions.show_error("Order failed","Please contact with administrator.", null);
-//                     }
-//                 },
-//                 error => {
-//                     // dispatch(alertActions.error(error.toString()));
-//                 }
-//             );
-// }

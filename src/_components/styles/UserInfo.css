@@ -1,8 +1,3 @@
-
-.params_icon{
-    width: 30%;
-}
-
 /*
     reactjs popup
 */
@@ -52,9 +47,3 @@
     padding: 10px 5px;
     font-size: large;
 }
-
-div[id="map_div"] div{
-    width: '100%' !important;
-    height: '500px' !important;
-}
-div[id="pop_content"], div[id="pop_content"] div {overflow: visible !important;}

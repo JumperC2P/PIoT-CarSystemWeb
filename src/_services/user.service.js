@@ -4,8 +4,7 @@ import { API_URL } from '../_constants';
 export const userService = {
     login,
     register,
-    update,
-    checkUserName
+    update
 };
 
 async function login(username, password) {
@@ -33,17 +32,7 @@ async function register(first_name, last_name, username, email, password, role) 
     return response_1;
 }
 
-async function checkUserName(username) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: qs.stringify({username})
-    };
-    
-    const response = await fetch(API_URL + "/checkUserName", requestOptions);
-    const response_1 = await handleResponse(response);
-    return response_1;
-}
+
 
 async function update(user) {
     const requestOptions = {

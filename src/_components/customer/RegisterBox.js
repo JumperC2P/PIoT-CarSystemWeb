@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import '../styles/RegisterBox.css';
 import {Form, Button, Col} from 'react-bootstrap';
-import { userActions } from '../../_action';
+import { userActions, commonActions } from '../../_action';
 import { sha256 } from 'js-sha256';
 import $ from "jquery";
 import { withRouter } from 'react-router-dom';
@@ -10,14 +10,25 @@ import { withRouter } from 'react-router-dom';
 const RegisterBox = (props) => {
     const [validated, setValidated] = useState(false);
 
+    const checkValidity = () => {
+        var isValid = true;
+        if ($('#validationFirstname').val().length === 0){
+            isValid = false;
+        } else if ($('#validationLastname').val().length === 0){
+            isValid = false;
+        } else if ($('#validationUsername').val().length === 0){
+            isValid = false;
+        } else if ($('#validationPassword').val().length === 0){
+            isValid = false;
+        } else if ($('#validationEmail').val().length === 0){
+            isValid = false;
+        }
+        return isValid;
+    }
+
     const handleSubmit = (event) => {
 
-        if (!props.check_user_name){
-            $('#validationUsername').val("")
-        }
-
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
+        if (checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }else{
@@ -27,9 +38,13 @@ const RegisterBox = (props) => {
                 username : $('#validationUsername').val(),
                 password : sha256($('#validationPassword').val()),
                 email : $('#validationEmail').val(),
-                role : 'Customer'
+                role : !props.user?'Customer':$('select#validationRole option:checked')[0].id
             }
-            props.register(userInfo, props.history);
+            if (props.user.role === 'Admin'){
+                commonActions.addUser(userInfo);
+            }else{
+                props.register(userInfo, props.history);
+            }
         }
 
         setValidated(true);
@@ -39,13 +54,27 @@ const RegisterBox = (props) => {
         let username = $('#validationUsername').val();
 
         if (username){
-            props.checkUserName(username);
+            await commonActions.checkUserName(username);
         }
     }
 
     return(
             <div id="register-box">
                 <Form noValidate validated={validated}>
+                    {
+                        props.user?
+                        <Form.Row>
+                            <Form.Group as={Col} md="12" controlId="validationRole">
+                                <Form.Label>Role </Form.Label>
+                                <Form.Control as="select" custom="true">
+                                    <option id="Customer" className="select list" value="Customer" defaultChecked={true}>Customer</option>)
+                                    <option id="Admin" className="select list" value="Administrator">Administrator</option>)
+                                    <option id="Engineer" className="select list" value="Engineer">Engineer</option>)
+                                </Form.Control>
+                            </Form.Group>
+                        </Form.Row>:""
+                    }
+                    
                     <Form.Row>
                         <Form.Group as={Col} md="6" controlId="validationFirstname">
                             <Form.Label>First name</Form.Label>
@@ -110,27 +139,32 @@ const RegisterBox = (props) => {
                             </Form.Control.Feedback>
                         </Form.Group>
                     </Form.Row>
-                    <Form.Group>
-                        <Form.Check
-                            required
-                            label="Agree to terms and conditions"
-                            feedback="You must agree before submitting."
-                        />
-                    </Form.Group>
-                    <Button type="button" onClick={handleSubmit}>Register</Button>
+                    {
+                        props.user ? "":
+                            <Form.Group>
+                                <Form.Check
+                                    required
+                                    label="Agree to terms and conditions"
+                                    feedback="You must agree before submitting."
+                                />
+                            </Form.Group>
+                    }
+                    {
+                        props.user ? <Button type="button" onClick={handleSubmit}>Add</Button>:<Button type="button" onClick={handleSubmit}>Register</Button>
+                    }
                 </Form>
             </div>
     );
 }
 
 const actionCreators = {
-    register: userActions.register,
-    checkUserName: userActions.checkUserName
+    register: userActions.register
 };
 
 const mapStateToProps = (state) => {
     return{
-        check_user_name: state.authentication.check_user_name
+        check_user_name: state.authentication.check_user_name,
+        user: state.authentication.user
     };
 }
 

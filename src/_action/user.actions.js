@@ -6,8 +6,7 @@ import { alertActions } from './';
 export const userActions = {
     login,
     logout,
-    register,
-    checkUserName
+    register
 };
 
 function login(user, history) {
@@ -19,11 +18,18 @@ function login(user, history) {
                     if (response){
                         let result = response.result;
                         if (result.length !== 0){
-                            console.log(result[0])
-                            dispatch(success(result[0]));
+                            let user = result[0];
+                            dispatch(success(user));
                             dispatch(alertActions.success("Login is successful.","", true, 1500));
-                            console.log(history);
-                            history.push('/');
+
+                            if (user.role === 'Admin'){
+                                history.push('/admin');
+                            }else if (user.role === 'Engineer'){
+                                history.push('/engineer');
+                            }else{
+                                history.push('/');
+                            }
+
                         }else{
                             dispatch(alertActions.error("Login failed","Please check your username and password."));
                         }
@@ -81,32 +87,5 @@ function register(user, history) {
 
     // function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
     function success(user, role) { return { type: userConstants.REGISTER_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
-}
-
-function checkUserName(username) {
-    return dispatch => {
-
-        userService.checkUserName(username)
-            .then(
-                response => { 
-                    if (response){
-                        let result = response.result;
-                        if (!result){
-                            dispatch(alertActions.error("The username is already exist.","Please change another username."));
-                        }
-                         dispatch(success(result));
-                    }else{
-                        dispatch(alertActions.error("The username is already exist.","Please change another username."));
-                    }
-                },
-                error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                }
-            );
-    };
-
-    function success(result, error) { return { type: userConstants.REGISTER_CHECK_USERNAME, result, error } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Form, Button, Col} from 'react-bootstrap';
 import { commonActions, carActions, alertActions } from '../../../_action';
-import '../../styles/SearchAndResult.css';
+import '../../styles/CarSearch.css';
 import DataTable from 'react-data-table-component';
-import GoogleMapPopWindow from './GoogleMapPopWindow';
-import BookWindow from './BookWindow';
+import GoogleMapPopWindow from '../../customer/serach/GoogleMapPopWindow';
+import CarDetails from './CarDetails';
 import {CAR_STATUS} from '../../../_constants'
 
 
-const pageOptions = [10];
+const pageOptions = [10,25];
 
 const customStyles = {
     headRow: {
@@ -39,11 +39,10 @@ const customStyles = {
   };
   
 
-class SearchAndResult extends Component{
+class CarSearch extends Component{
 
     constructor(props){
         super(props);
-        console.log(props);
         this.state = {
             columns : [
                         { name: 'Car ID', selector: 'car_id', sortable: true, center: true },
@@ -55,12 +54,20 @@ class SearchAndResult extends Component{
                         { name: 'Status', selector: 'car_status', sortable: true, center: true },
                         { name: 'Location', selector: 'car_location', sortable: false, center: true, 
                             cell:  (row) => <GoogleMapPopWindow car={row}/>
-                            // cell:  (row) => <img className="params_icon" src={GoogleMapIcon} style={{"cursor":"pointer"}} onClick={()=>{this.showMap(row.car_location)}}/> 
                         },
                         {
                             cell: (row) => {
-                                return row.car_status === 'Available'?
-                                    <BookWindow car={row} {...props} parent={this} />:
+                                return <CarDetails car={row} {...props} parent={this} makes={this.state.makes}/>
+                            },
+                            ignoreRowClick: true,
+                            allowOverflow: true,
+                            button: true,
+                            center: true
+                          },
+                        {
+                            cell: (row) => {
+                                return row.car_status !== 'Reported'?
+                                    <Button variant="danger" style={{"cursor":"cursor"}} onClick={()=>{this.onReported(row)}}>Report</Button>:
                                     <Button variant="secondary" disabled style={{"cursor":"not-allowed"}} >{row.car_status}</Button>
                             },
                             ignoreRowClick: true,
@@ -84,13 +91,10 @@ class SearchAndResult extends Component{
         this.getParameters();
     }
 
-    showMap = (location) => {
-        console.log(location)
-    }
-
-    onBooked = (car) => {
+    onReported = (car) => {
+        console.log("Report");
         console.log(car);
-    }
+    } 
 
     getParameters = async() => {
         let makesP = await commonActions.getMakes(this.props.user.username, this.props.user.password);
@@ -271,7 +275,7 @@ class SearchAndResult extends Component{
                     <Form>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkStatus">
-                                <Form.Label md="4" className="search-label">Manufacturer: </Form.Label>
+                                <Form.Label md="4" className="search-label car">Status: </Form.Label>
                                 {this.state.status.map((option)=>
                                     <Form.Check 
                                         key={option.status}
@@ -287,7 +291,7 @@ class SearchAndResult extends Component{
                         </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkMake">
-                                <Form.Label md="4" className="search-label">Manufacturer: </Form.Label>
+                                <Form.Label md="4" className="search-label car">Manufacturer: </Form.Label>
                                 {this.state.makes.map((option)=>
                                     <Form.Check 
                                         key={option.id}
@@ -303,7 +307,7 @@ class SearchAndResult extends Component{
                         </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkColor">
-                            <Form.Label md="4" className="search-label">Color: </Form.Label>
+                            <Form.Label md="4" className="search-label car">Color: </Form.Label>
                                 {this.state.colors.map((option)=>
                                     <Form.Check 
                                         key={option.color}
@@ -320,7 +324,7 @@ class SearchAndResult extends Component{
                         </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkType">
-                                <Form.Label md="4" className="search-label">Type: </Form.Label>
+                                <Form.Label md="4" className="search-label car">Type: </Form.Label>
                                 {this.state.body_types.map((option)=>
                                     <Form.Check 
                                         key={option.body_type}
@@ -336,7 +340,7 @@ class SearchAndResult extends Component{
                         </Form.Row>
                         <Form.Row>
                             <Form.Group as={Col} controlId="checkSeat">
-                                <Form.Label md="4" className="search-label">Seat Numbers: </Form.Label>
+                                <Form.Label md="4" className="search-label car">Seat Numbers: </Form.Label>
                                 {this.state.seat_numbers.map((option)=>
                                     <Form.Check 
                                         key={option.seat_number}
@@ -382,10 +386,9 @@ class SearchAndResult extends Component{
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         user: state.authentication.user
     }
 }
 
-export default connect(mapStateToProps)(SearchAndResult);
+export default connect(mapStateToProps)(CarSearch);

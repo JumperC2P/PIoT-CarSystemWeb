@@ -1,7 +1,7 @@
 import React from 'react';
 // import './styles/Navbar.css';
 import { withRouter, Link } from 'react-router-dom';
-import Logout from '../sub_components/Logout';
+import Logout from '../customer/Logout';
 import { connect } from 'react-redux';
 import { Navbar, Nav} from 'react-bootstrap'
 

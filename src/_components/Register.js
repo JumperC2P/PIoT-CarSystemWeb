@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RegisterBox from './sub_components/RegisterBox';
+import RegisterBox from './customer/RegisterBox';
 
 
 class Register extends Component{

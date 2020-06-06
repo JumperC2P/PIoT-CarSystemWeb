@@ -21,6 +21,9 @@ class AdminDashBoard extends Component{
                 <div className="home wrap">
                     <h1 className="ui home">Hi, {this.props.user.first_name}, Welcome to Admin Dashboard.</h1>
                 </div>
+                <center>
+                    <iframe style={{border:"0", width:"80%", height:"1024px"}}  src="https://datastudio.google.com/embed/reporting/efb24e07-bb4f-4fad-b271-2e22a3f19b19/page/nFDTB" frameborder="0" allowfullscreen></iframe>
+                </center>
             </div>
         );
     }

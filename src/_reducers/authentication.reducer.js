@@ -1,6 +1,6 @@
 import { userConstants } from '../_constants';
 
-const initialState = true?{
+const initialState = false?{
   user:{
     email: "ys17ygg@gmail.com",
     first_name: "Frank",

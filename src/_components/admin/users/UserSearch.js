@@ -96,6 +96,7 @@ class UserSearch extends Component{
                     ],
             roles: [
                 {'name': 'Admin', 'isChecked':false},
+                {'name': 'Manager', 'isChecked':false},
                 {'name': 'Customer', 'isChecked':false},
                 {'name': 'Engineer', 'isChecked':false}
             ],

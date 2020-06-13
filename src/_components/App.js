@@ -10,7 +10,7 @@ import ShowRecordsHistory from './ShowRecordsHistory';
 import ProtectedRoute from './customer/ProtectedRoute';
 import UserManagment from './admin/users/UserManagement';
 import CarManagment from './admin/cars/CarManagment';
-import AdminDashBoard from './admin/AdminDashBoard';
+import AdminDashBoard from './manager/DashBoard';
 import EngHome from './engineer/EngHome';
 import UserDetails from './customer/UserDetails';
 import RentalHistory from './admin/rental/RentalHistory';
@@ -32,7 +32,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <ProtectedRoute exact path="/records" component={ShowRecordsHistory} />
                 <ProtectedRoute exact path="/member_center" component={UserDetails} />
-                <ProtectedRoute exact path="/admin" component={AdminDashBoard} />
+                <ProtectedRoute exact path="/manager" component={AdminDashBoard} />
                 <ProtectedRoute exact path="/admin/dashboard" component={AdminDashBoard} />
                 <ProtectedRoute exact path="/admin/users" component={UserManagment} />
                 <ProtectedRoute exact path="/admin/cars" component={CarManagment} />

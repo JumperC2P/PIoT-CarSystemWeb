@@ -69,6 +69,7 @@ const RegisterBox = (props) => {
                                 <Form.Control as="select" custom="true">
                                     <option id="Customer" className="select list" value="Customer" defaultChecked={true}>Customer</option>)
                                     <option id="Admin" className="select list" value="Administrator">Administrator</option>)
+                                    <option id="Manager" className="select list" value="Manager">Manager</option>)
                                     <option id="Engineer" className="select list" value="Engineer">Engineer</option>)
                                 </Form.Control>
                             </Form.Group>

@@ -6,15 +6,13 @@ import { connect } from 'react-redux';
 import { Navbar, Nav} from 'react-bootstrap'
 
 
-const AdminNavBar = (props) =>  {
+const ManagerNavBar = (props) =>  {
     return(
         <div>
             <Navbar bg="primary" variant="dark" fixed="top">
-                <Navbar.Brand><Link to="/admin/rental_history" style={{"color":"white"}}>Panda Car Rental - Admin</Link></Navbar.Brand>
+                <Navbar.Brand><Link to="/manager" style={{"color":"white"}}>Panda Car Rental - Manager</Link></Navbar.Brand>
                 <Nav className="mr-auto">
-                   <Link className="nav-item nav-link" to="/admin/users">User Management</Link>
-                   <Link className="nav-item nav-link" to="/admin/cars">Car Management</Link>
-                   <Link className="nav-item nav-link" to="/admin/rental_history">Rental History</Link>
+                   <Link className="nav-item nav-link" to="/manager">Dashboard</Link>
                 </Nav>
                 {
                     props.user ? <Logout /> : <div></div>
@@ -30,4 +28,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(AdminNavBar));
+export default withRouter(connect(mapStateToProps)(ManagerNavBar));

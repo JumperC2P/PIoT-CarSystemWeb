@@ -23,9 +23,11 @@ function login(user, history) {
                             dispatch(alertActions.success("Login is successful.","", true, 1500));
 
                             if (user.role === 'Admin'){
-                                history.push('/admin');
+                                history.push('/admin/rental_history');
                             }else if (user.role === 'Engineer'){
                                 history.push('/engineer');
+                            }else if (user.role === 'Manager'){
+                                history.push('/manager');
                             }else{
                                 history.push('/');
                             }
